@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .dashboard-container {
+            margin-top: 50px;
+        }
+        .stock-table, .signal-table {
+            margin-top: 20px;
+        }
+        .add-signal-btn {
+            font-size: 24px;
+            line-height: 24px;
+        }
+        .signal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container dashboard-container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>Welcome to your dashboard, {{ current_user.username }}!</h2>
+                <form method="POST" action="{{ url_for('dashboard') }}" class="form-inline justify-content-center mt-4">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="ticker" class="sr-only">Ticker</label>
+                        <input type="text" class="form-control" id="ticker" name="ticker" placeholder="Enter Ticker" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Add Stock</button>
+                </form>
+
+                <h3 class="text-center mt-4">Your Stocks</h3>
+                <table class="table table-striped stock-table">
+                    <thead>
+                        <tr>
+                            <th>Ticker</th>
+                            <th>Stock Name</th>
+                            <th>Price</th>
+                            <th>RSI</th>
+                            <th>EPS</th>
+                            <th>Shares Outstanding</th>
+                            <th>EBITDA</th>
+                            <th>P/S Ratio</th>
+                            <th>P/E Ratio</th>
+                            <th>Market Cap</th>
+                            <th>Gross Margins</th>
+                            <th>Operating Margins</th>
+                            <th>LTM Revenue</th>
+                            <th>Sentiment</th>
+                            <th>LTM FCF</th>
+                            <th>Volume Surge 100</th>
+                            <th>Enterprise Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for stock in stocks %}
+                            <tr>
+                                <td>{{ stock['ticker'] }}</td>
+                                <td>{{ stock['stock_name'] }}</td>
+                                <td>${{ stock['price'] }}</td>
+                                <td>{{ stock['rsi'] }}</td>
+                                <td>{{ stock['eps'] }}</td>
+                                <td>{{ stock['Shares Outstanding'] }}</td>
+                                <td>{{ stock['ebitda'] }}</td>
+                                <td>{{ stock['ps_ratio'] }}</td>
+                                <td>{{ stock['pe_ratio'] }}</td>
+                                <td>{{ stock['market_cap'] }}</td>
+                                <td>{{ stock['gross_margins'] }}</td>
+                                <td>{{ stock['operating_margins'] }}</td>
+                                <td>{{ stock['ltm_revenue'] }}</td>
+                                <td>{{ stock['sentiment'] }}</td>
+                                <td>{{ stock['ltm_fcf'] }}</td>
+                                <td>{{ stock['volume_100'] }}</td>
+                                <td>{{ stock['enterprise_value'] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="signal-header">
+                    <h3>Your Signals</h3>
+                    <a href="{{ url_for('add_signal') }}" class="btn btn-success add-signal-btn" title="Add Signal"> Add Signal +</a>
+                </div>
+                <table class="table table-striped signal-table">
+                    <thead>
+                        <tr>
+                            <th>Ticker</th>
+                            <th>Metric</th>
+                            <th>Threshold</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for signal in signals %}
+                            <tr>
+                                <td>{{ signal['ticker'] }}</td>
+                                <td>{{ signal['metric'] }}</td>
+                                <td>{{ signal['threshold'] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <form method="POST" action="{{ url_for('logout') }}" class="text-center mt-4">
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Signal</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mt-5">Add Signal</h2>
+                <form method="POST" action="{{ url_for('add_signal') }}">
+                    <div class="form-group">
+                        <label for="ticker">Ticker</label>
+                        <input type="text" class="form-control" id="ticker" name="ticker" placeholder="Enter Ticker" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="metric">Metric</label>
+                        <select class="form-control" id="metric" name="metric" required>
+                            <option value="" disabled selected>Select a metric</option>
+                            <option value="price">Price</option>
+                            <option value="rsi">RSI</option>
+                            <option value="eps">EPS</option>
+                            <option value="shares_outstanding">Shares Outstanding</option>
+                            <option value="ebitda">EBITDA</option>
+                            <option value="ps_ratio">P/S Ratio</option>
+                            <option value="pe_ratio">P/E Ratio</option>
+                            <option value="market_cap">Market Cap</option>
+                            <option value="gross_margins">Gross Margins</option>
+                            <option value="operating_margins">Operating Margins</option>
+                            <option value="ltm_revenue">LTM Revenue</option>
+                            <option value="ltm_fcf">LTM FCF</option>
+                            <option value="sentiment">Sentiment</option>
+                            <option value="volume_surge_100">Volume Surge 100</option>
+                            <option value="enterprise_value">Enterprise Value</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="threshold">Threshold</label>
+                        <input type="text" class="form-control" id="threshold" name="threshold" placeholder="Enter Threshold" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Signal</button>
+                </form>
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
