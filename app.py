@@ -37,6 +37,13 @@ EMAIL_USER = 'alerts4vbalpha@gmail.com'
 EMAIL_PASS = 'yqhw llcy ttlv pdin'
 EMAIL_SENDER = EMAIL_USER
 
+@app.errorhandler(404)
+def page_not_found(e):
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
+    else:
+        return redirect(url_for('login'))
+
 @login_manager.user_loader
 def load_user(user_id):
     logging.debug(f"Loading user with ID: {user_id}")
