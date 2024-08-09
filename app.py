@@ -182,11 +182,11 @@ class User(UserMixin):
         self.save_to_db()
         self.send_stock_added_email(stock_data)
 
-    def add_signal(self, ticker, metric, threshold):
+    def add_signal(self, ticker, metric, percent_threshold):
         signal = {
             'ticker': ticker,
             'metric': metric,
-            'threshold': threshold
+            'percent_threshold': percent_threshold
         }
         self.signals.append(signal)
         self.save_to_db()
@@ -301,7 +301,7 @@ def add_signal():
     if request.method == 'POST':
         ticker = request.form['ticker']
         metric = request.form['metric']
-        threshold = request.form['threshold']
+        threshold = request.form['percent_threshold']
         
         # Add the signal to the user's signals
         current_user.add_signal(ticker, metric, threshold)
