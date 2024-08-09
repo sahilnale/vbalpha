@@ -64,21 +64,21 @@
                             <tr>
                                 <td>{{ stock['ticker'] }}</td>
                                 <td>{{ stock['stock_name'] }}</td>
-                                <td>${{ stock['price'] }}</td>
+                                <td>{{ stock['price']|currency_format }}</td>
                                 <td>{{ stock['rsi'] }}</td>
-                                <td>{{ stock['eps'] }}</td>
-                                <td>{{ stock['Shares Outstanding'] }}</td>
-                                <td>{{ stock['ebitda'] }}</td>
+                                <td>{{ stock['eps']|currency_format }}</td>
+                                <td>{{ stock['Shares Outstanding']|comma_format }}</td>
+                                <td>{{ stock['ebitda']|currency_format }}</td>
                                 <td>{{ stock['ps_ratio'] }}</td>
                                 <td>{{ stock['pe_ratio'] }}</td>
-                                <td>{{ stock['market_cap'] }}</td>
+                                <td>{{ stock['market_cap']|currency_format }}</td>
                                 <td>{{ stock['gross_margins'] }}</td>
                                 <td>{{ stock['operating_margins'] }}</td>
-                                <td>{{ stock['ltm_revenue'] }}</td>
+                                <td>{{ stock['ltm_revenue']|currency_format }}</td>
                                 <td>{{ stock['sentiment'] }}</td>
-                                <td>{{ stock['ltm_fcf'] }}</td>
+                                <td>{{ stock['ltm_fcf']|currency_format }}</td>
                                 <td>{{ stock['volume_100'] }}</td>
-                                <td>{{ stock['enterprise_value'] }}</td>
+                                <td>{{ stock['enterprise_value']|currency_format }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>

@@ -22,6 +22,22 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['MONGO_URI'] = "mongodb+srv://sahilnale:Logic!23@cluster0.y5amboq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
+@app.template_filter('currency')
+def currency_format(value):
+    return "{:,.2f}".format(value)
+
+@app.template_filter('comma_format')
+def comma_format(value):
+    return "{:,}".format(value)
+
+@app.template_filter('currency_format')
+def currency_format(value):
+    formatted_value = "{:,.2f}".format(abs(value))
+    if value < 0:
+        return f"-${formatted_value}"
+    else:
+        return f"${formatted_value}"
+
 # MongoDB client setup
 client = MongoClient(app.config['MONGO_URI'])
 app.db = client.stocks  # Accessing the 'stocks' database
