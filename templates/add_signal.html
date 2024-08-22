@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Signal</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .disabled {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -38,8 +44,27 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="threshold">Threshold</label>
-                        <input type="text" class="form-control" id="threshold" name="threshold" placeholder="Enter Threshold" required>
+                        <label>Threshold Type</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="threshold_type" id="threshold_value_radio" value="value" checked>
+                            <label class="form-check-label" for="threshold_value_radio">
+                                Threshold Value
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="threshold_type" id="threshold_percentage_radio" value="percentage">
+                            <label class="form-check-label" for="threshold_percentage_radio">
+                                Threshold Percentage
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="threshold_value">Threshold Value</label>
+                        <input type="text" class="form-control" id="threshold_value" name="threshold_value" placeholder="Enter Threshold Value">
+                    </div>
+                    <div class="form-group">
+                        <label for="threshold_percentage">Threshold Percentage</label>
+                        <input type="text" class="form-control disabled" id="threshold_percentage" name="threshold_percentage" placeholder="Enter Threshold Percentage" disabled>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Signal</button>
                 </form>
@@ -51,6 +76,19 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('input[name="threshold_type"]').on('change', function() {
+                if ($('#threshold_value_radio').is(':checked')) {
+                    $('#threshold_value').removeClass('disabled').prop('disabled', false);
+                    $('#threshold_percentage').addClass('disabled').prop('disabled', true);
+                } else {
+                    $('#threshold_value').addClass('disabled').prop('disabled', true);
+                    $('#threshold_percentage').removeClass('disabled').prop('disabled', false);
+                }
+            });
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
