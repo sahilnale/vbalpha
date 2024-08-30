@@ -182,12 +182,18 @@ class User(UserMixin):
         self.save_to_db()
         self.send_stock_added_email(stock_data)
 
-    def add_signal(self, ticker, metric, percent_threshold):
+    def add_signal(self, ticker, metric, threshold, threshold_type):
         signal = {
             'ticker': ticker,
             'metric': metric,
-            'percent_threshold': percent_threshold
+            'threshold': threshold,
+            'threshold_type': threshold_type
         }
+        
+        # Initialize signals list if it doesn't exist
+        if not hasattr(self, 'signals'):
+            self.signals = []
+        
         self.signals.append(signal)
         self.save_to_db()
         flash('Signal has been added!', 'success')
@@ -301,11 +307,22 @@ def add_signal():
     if request.method == 'POST':
         ticker = request.form['ticker']
         metric = request.form['metric']
-        threshold = request.form['percent_threshold']
         
+        # Determine whether to use threshold value or threshold percentage
+        if request.form.get('threshold_value'):
+            threshold_type = 'value'
+            threshold = request.form['threshold_value']
+        elif request.form.get('threshold_percentage'):
+            threshold_type = 'percentage'
+            threshold = request.form['threshold_percentage']
+        else:
+            flash('Please provide either a threshold value or percentage.', 'danger')
+            return redirect(url_for('add_signal'))
+
         # Add the signal to the user's signals
-        current_user.add_signal(ticker, metric, threshold)
+        current_user.add_signal(ticker, metric, threshold, threshold_type)
         
+        flash(f'Signal added successfully for {ticker} with {threshold_type}: {threshold}', 'success')
         return redirect(url_for('dashboard'))
     
     return render_template('add_signal.html')

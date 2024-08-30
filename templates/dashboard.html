@@ -86,7 +86,7 @@
 
                 <div class="signal-header">
                     <h3>Your Signals</h3>
-                    <a href="{{ url_for('add_signal') }}" class="btn btn-success add-signal-btn" title="Add Signal"> Add Signal +</a>
+                    <a href="{{ url_for('add_signal') }}" class="btn btn-success add-signal-btn" title="Add Signal">Add Signal +</a>
                 </div>
                 <table class="table table-striped signal-table">
                     <thead>
@@ -101,7 +101,13 @@
                             <tr>
                                 <td>{{ signal['ticker'] }}</td>
                                 <td>{{ signal['metric'] }}</td>
-                                <td>{{ signal['threshold'] }}</td>
+                                <td>
+                                    {% if signal['threshold_type'] == 'percentage' %}
+                                        {{ signal['threshold'] }}%
+                                    {% else %}
+                                        {{ signal['threshold'] }}
+                                    {% endif %}
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
